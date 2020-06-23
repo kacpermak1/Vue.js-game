@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monster Slayer</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">YOU</h1>
+            <div class="healthbar-main">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" v-bind:style="{width: playerHealth + '%'}">
+                    <p class="healthbar-percentage"><span>{{ playerHealth }}%</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTER</h1>
+            <div class="healthbar-main">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" v-bind:style="{width: monsterHealth + '%'}">
+                    <p class="healthbar-percentage"><span>{{ monsterHealth }}%</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls" v-if="!gameStarted">
+        <div class="small-12 columns">
+            <button id="start-game" @click="startGame()">START NEW GAME</button>
+        </div>
+    </section>
+    <section class="row controls" v-if="gameStarted">
+        <div class="small-12 columns">
+            <div>{{ counter }}</div>
+            <button id="attack" @click="attack()">ATTACK</button>
+            <button id="special-attack" v-bind:style="specialAttackActive ? 'backgroundColor:#ffaf4f;' : 'backgroundColor:#999999;'" @click="specialAttack()">SPECIAL ATTACK</button>
+            <button id="heal" v-bind:style="healButtonDisabled ? 'backgroundColor:#999999;' : 'backgroundColor:#aaffb0;'" @click="heal()">HEAL</button>
+            <button id="give-up" @click="giveUp()">GIVE UP</button>
+        </div>
+    </section>
+    <section class="row log" v-if="playerHealth<100">
+        <div class="small-12 columns">
+            <ul id="log-list">
+                <template v-for="infoValue in infoArray">
+                    <li class="monster-turn">{{infoValue.playerDamage}}</li>
+                    <li class="player-turn">{{infoValue.monsterDamage}}</li>
+                </template>
+            </ul>
+        </div>
+    </section>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
